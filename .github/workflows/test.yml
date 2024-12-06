@@ -16,8 +16,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup CIDoer
         uses: ./
-      - name: Test CIDoer
+      - name: Run CIDoer Script
         shell: bash
         run: |
           source "${CIDOER_CORE_FILE:?}"
           do_print_dash_pair 'GITHUB_RUN_NUMBER' "${{ github.run_number }}"
+          do_workflow_job build
+          do_workflow_job upload
