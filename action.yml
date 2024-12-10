@@ -32,15 +32,16 @@ runs:
           mv "cidoer-$ref" "$dir"
           ls -lhAR "$dir"
           path="$(pwd)"/"$dir"
-          source "$path"/cidoer.core.sh
           export CIDOER_DIR="$path"
-          export CIDOER_CORE_FILE="$path/cidoer.core.sh"
-          do_print_section FINISHED
-          uname -a || print 'uname error'
-          do_print_dash_pair 'CIDOER_OS_TYPE' "$(do_os_type)"
+          export CIDOER_CORE_FILE="$path/cidoer.core.sh"  
         }
         setup_cidoer "${DOWNLOAD_REF:-}" "${DOWNLOAD_DIR:-}"
         if [ -n "${GITHUB_ENV:-}" ]; then
           printf '%s\n' "CIDOER_DIR=$CIDOER_DIR" >>"$GITHUB_ENV"
           printf '%s\n' "CIDOER_CORE_FILE=$CIDOER_CORE_FILE" >>"$GITHUB_ENV"
         fi
+        uname -a || print 'uname error'
+        source "$CIDOER_CORE_FILE"
+        do_print_section FINISHED
+        do_print_dash_pair 'CIDOER_OS_TYPE' "$(do_os_type)"
+        do_print_dash_pair 'CIDOER_HOST_TYPE' "$(do_host_type)"
