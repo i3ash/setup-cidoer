@@ -29,11 +29,12 @@ runs:
           unzip -q source.zip -d "$(pwd)"
           rm source.zip
           rm -rf "$(pwd)"/"${dir:?}"
+          ref=$(printf '%s' "$ref" | tr '/' '-')
           mv "cidoer-$ref" "$dir"
           ls -lhAR "$dir"
           path="$(pwd)"/"$dir"
           export CIDOER_DIR="$path"
-          export CIDOER_CORE_FILE="$path/cidoer.core.sh"  
+          export CIDOER_CORE_FILE="$path/cidoer.core.sh"
         }
         setup_cidoer "${DOWNLOAD_REF:-}" "${DOWNLOAD_DIR:-}"
         if [ -n "${GITHUB_ENV:-}" ]; then
